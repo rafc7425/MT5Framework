@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "platform_connector"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
