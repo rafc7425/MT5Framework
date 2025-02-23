@@ -89,3 +89,14 @@ class DataProvider():
         else:
             return bars
                 
+    def get_latest_tick(self, symbol: str) -> dict:
+        try:
+            tick = mt5.symbol_info_tick(symbol)
+            if tick is None:
+                print(f"Unable to retrieve data for symbol {symbol}.")
+                return {}  
+            return tick._asdict()  
+        except Exception as e:
+            print(f"Something went wrong while retrieving the latest tick for {symbol}: {e}")
+            return {}   
+                    
