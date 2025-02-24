@@ -1,9 +1,18 @@
 import MetaTrader5 as mt5
 import pandas as pd
+from typing import Dict
+from datetime import datetime
+from events.events import DataEvent
+from queue import Queue
 
 class DataProvider():
-    def __init__(self):
-        pass
+    def __init__(self,events_queue:Queue,Symbol_list: list,timeframe: str):
+       self.symbols: list = Symbol_list
+       self.timeframe: str = timeframe
+       self.events_queue = events_queue
+       
+       #create dic to save latest tick of each symbol
+       self.last_bar_datetime: Dict[str,datetime] = {symbol: datetime.min for symbol in self.symbols}
     
     
     def _map_timeFrames(self,timeFrame:str) -> int:
@@ -99,4 +108,18 @@ class DataProvider():
         except Exception as e:
             print(f"Something went wrong while retrieving the latest tick for {symbol}: {e}")
             return {}   
+    
+    def check_for_new_date(self) -> None:
+        for symbol in self.symbols:
+            latest_bar = self.get_latest_closed_bar(symbol,self.timeframe)
+            if latest_bar is None:
+                continue
+            if not latest_bar.empty and latest_bar.time > self.last_bar_datetime[symbol]:
+                self.last_bar_datetime[symbol] = latest_bar.time   
+                
+                data_event = DataEvent(symbol=symbol,data=latest_bar)
+                
+                self.events_queue.put(data_event)
+                    
+                    
                     
