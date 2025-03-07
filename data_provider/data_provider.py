@@ -71,7 +71,7 @@ class DataProvider():
             if bars.empty:
                 return pd.Series()   
             else:
-                bars.iloc[-1] 
+               return bars.iloc[-1] 
                 
                 
     def get_latest_closed_bars(self,symbol: str,timeframe: str, num_bars: int = 1) -> pd.DataFrame:
@@ -114,9 +114,8 @@ class DataProvider():
             latest_bar = self.get_latest_closed_bar(symbol,self.timeframe)
             if latest_bar is None:
                 continue
-            if not latest_bar.empty and latest_bar.time > self.last_bar_datetime[symbol]:
-                self.last_bar_datetime[symbol] = latest_bar.time   
-                
+            if not latest_bar.empty and latest_bar.name > self.last_bar_datetime[symbol]:
+                self.last_bar_datetime[symbol] = latest_bar.name 
                 data_event = DataEvent(symbol=symbol,data=latest_bar)
                 
                 self.events_queue.put(data_event)

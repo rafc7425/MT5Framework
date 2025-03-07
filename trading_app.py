@@ -4,7 +4,7 @@ from queue import Queue
 from trading_director.trading_director import TradingDirector
 
 if __name__ == "__main__":
-    symbols = ['EURUSD', 'EURJPY']
+    symbols = ['EURUSD', 'EURJPY', 'EURGBP','SP500','GBPUSD']
     timeframe = '1min'
     
     events_queue = Queue()

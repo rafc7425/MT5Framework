@@ -1,3 +1,4 @@
+from datetime import datetime
 import queue
 from data_provider.data_provider import DataProvider
 from typing import Dict, Callable
@@ -18,7 +19,11 @@ class TradingDirector():
         }
         
     def _handle_data_event(self,event:DataEvent):
-        print(f"New Data Retrieved from {event.symbol} - Latest price from close {event.data.close}")    
+        print(f"{self._dateprint()} - New Data Retrieved from {event.symbol} - Latest price from close {event.data.close}")    
+        
+    def _dateprint(self) -> str:
+        return datetime.now().strftime("%d/%m/%Y %H:%M:%S.%f")[:-3]    
+    
         
     def execute(self)->None:
         #Main loop definition
