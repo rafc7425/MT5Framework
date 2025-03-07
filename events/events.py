@@ -11,6 +11,8 @@ class EventTytpe(str,Enum):
 
 class BaseEvent(BaseModel):
     event_type:EventTytpe
+    class Config:
+        arbitrary_types_allowed = True
     
 class DataEvent(BaseEvent):
     event_type:EventTytpe = EventTytpe.DATA    
