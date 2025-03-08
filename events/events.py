@@ -7,7 +7,14 @@ import pandas as pd
 class EventTytpe(str,Enum):
     DATA = "DATA"
     SIGNAL = "SIGNAL"
-
+    
+class OrderType(str,Enum):
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+    STOP = "STOP"    
+class SignalType(str,Enum):
+    BUY = "BUY"
+    SELL = "SELL"    
 
 class BaseEvent(BaseModel):
     event_type:EventTytpe
@@ -19,4 +26,12 @@ class DataEvent(BaseEvent):
     symbol: str
     data: pd.Series
         
-    
+class SignalEvent(BaseEvent):
+    event_type: EventTytpe = EventTytpe.SIGNAL
+    symbol:str
+    signal: SignalType
+    target: OrderType
+    target_Price:float 
+    magic_number:int 
+    sl:float
+    tp:float  

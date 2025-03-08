@@ -19,7 +19,7 @@ class TradingDirector():
         }
         
     def _handle_data_event(self,event:DataEvent):
-        print(f"{self._dateprint()} - New Data Retrieved from {event.symbol} - Latest price from close {event.data.close}")    
+        print(f"{event.data.name} - New Data Retrieved from {event.symbol} - Latest price from close {event.data.close}")    
         
     def _dateprint(self) -> str:
         return datetime.now().strftime("%d/%m/%Y %H:%M:%S.%f")[:-3]    
